@@ -974,10 +974,11 @@ function Review() {
     )
     .filter((x) => x.q)
 
-  function practiceWeakArea(topicId: TopicId) {
-    window.location.href =
-      `/practice/run?topic=${topicId}&difficulty=Mixed&count=10`
-  }
+  const nav = useNavigate()
+
+function practiceWeakArea(topicId: TopicId) {
+  nav(`/practice/run?topic=${topicId}&difficulty=Mixed&count=10`)
+}
 
   return (
     <Page
