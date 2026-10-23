@@ -486,39 +486,256 @@ function Practice(){
   return <Page title="Practice Quiz" subtitle="Choose a focused session and learn from every answer."><div className="setup-grid"><div className="panel setup-main"><span className="eyebrow">Build your session</span><h2>How do you want to practice?</h2><label>Topic<select value={topic} onChange={e=>setTopic(e.target.value as any)}><option value="all">All Topics</option>{topics.map(t=><option key={t.id} value={t.id}>{t.name}</option>)}</select></label><label>Difficulty<select value={difficulty} onChange={e=>setDifficulty(e.target.value as any)}><option>Mixed</option><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select></label><label>Questions<select value={count} onChange={e=>setCount(Number(e.target.value))}><option value="5">5 questions</option><option value="10">10 questions</option><option value="20">20 questions</option></select></label><button className="btn primary large full" onClick={start}>Start Practice <ArrowRight size={18}/></button></div><div className="panel setup-info"><div className="feature-icon"><Brain/></div><h2>Learn, don't just guess.</h2><p>Practice mode gives you an explanation, a simple explanation and a memory tip after each answer.</p><ul><li><CheckCircle2/> Original learning questions</li><li><CheckCircle2/> Immediate feedback</li><li><CheckCircle2/> Results saved locally</li><li><CheckCircle2/> Weak areas feed Smart Recovery</li></ul></div></div></Page>
 }
 
-function QuizRun(){
-  const params=new URLSearchParams(useLocation().search); const topic=params.get('topic')||'all'; const difficulty=params.get('difficulty')||'Mixed'; const count=Number(params.get('count')||10)
-  const pool=useMemo(()=>questions.filter(q=>(topic==='all'||q.topicId===topic)&&(difficulty==='Mixed'||q.difficulty===difficulty)).sort(()=>Math.random()-.5).slice(0,count),[])
-  const [index,setIndex]=useState(0); const [selected,setSelected]=useState<number|null>(null); const [answers,setAnswers]=useState<Record<string,number>>({}); const [submitted,setSubmitted]=useState(false); const [start]=useState(Date.now()); const nav=useNavigate()
-  const q=pool[index]
-  if(!q)return <Page title="No questions found" subtitle="Try another topic or difficulty."><Empty icon={CircleHelp} text="There are not enough questions for this selection." action="/practice" actionText="Back to practice"/></Page>
-  function choose(i:number){if(!submitted){setSelected(i);setAnswers(a=>({...a,[q.id]:i}))}}
-  function next(){if(index<pool.length-1){setIndex(index+1);setSelected(answers[pool[index+1].id] ?? null);setSubmitted(false)}else{finish()}}
-async function finish() {
-  const records = pool.map((x) => ({
-    questionId: x.id,
-    selected: answers[x.id] ?? -1,
-    correct: (answers[x.id] ?? -1) === x.answer,
-  }))
+function QuizRun() {
+  const location = useLocation()
+  const nav = useNavigate()
 
-  const correct = records.filter((x) => x.correct).length
+  const params = new URLSearchParams(location.search)
 
-  const attempt: Attempt = {
-    id: crypto.randomUUID(),
-    topicId: topic as any,
-    score: pct(correct, pool.length),
-    total: pool.length,
-    correct,
-    incorrect: pool.length - correct,
-    duration: Math.round((Date.now() - start) / 1000),
-    date: new Date().toISOString(),
-    answers: records,
+  const topic = params.get('topic') || 'all'
+  const difficulty = params.get('difficulty') || 'Mixed'
+  const count = Number(params.get('count') || 10)
+
+  const pool = useMemo(() => {
+    return questions
+      .filter(
+        (q) =>
+          (topic === 'all' || q.topicId === topic) &&
+          (difficulty === 'Mixed' || q.difficulty === difficulty)
+      )
+      .sort(() => Math.random() - 0.5)
+      .slice(0, count)
+  }, [topic, difficulty, count])
+
+  const [index, setIndex] = useState(0)
+  const [selected, setSelected] = useState<number | null>(null)
+  const [answers, setAnswers] = useState<Record<string, number>>({})
+  const [submitted, setSubmitted] = useState(false)
+  const [start] = useState(Date.now())
+
+  const q = pool[index]
+
+  /*
+    Shuffle the answer choices for the current question.
+
+    originalIndex remembers where each answer was in the
+    original question, so the correct answer stays correct
+    even after the choices are shuffled.
+  */
+  const shuffledOptions = useMemo(() => {
+    if (!q) return []
+
+    const options = q.options.map((option, originalIndex) => ({
+      option,
+      originalIndex,
+    }))
+
+    for (let i = options.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1))
+
+      ;[options[i], options[j]] = [options[j], options[i]]
+    }
+
+    return options
+  }, [q?.id])
+
+  if (!q) {
+    return (
+      <Page
+        title="No questions found"
+        subtitle="Try another topic or difficulty."
+      >
+        <Empty
+          icon={CircleHelp}
+          text="There are not enough questions for this selection."
+          action="/practice"
+          actionText="Back to Practice"
+        />
+      </Page>
+    )
   }
 
-  await saveAttempt(attempt)
+  function choose(displayIndex: number) {
+    if (!submitted) {
+      const originalIndex =
+        shuffledOptions[displayIndex].originalIndex
 
-  nav(`/results/${attempt.id}`)
-}}
+      // selected stores the DISPLAY position
+      setSelected(displayIndex)
+
+      // answers stores the ORIGINAL position
+      setAnswers((a) => ({
+        ...a,
+        [q.id]: originalIndex,
+      }))
+    }
+  }
+
+  function next() {
+    if (index < pool.length - 1) {
+      const nextIndex = index + 1
+
+      setIndex(nextIndex)
+
+      // Start the next question with no answer selected.
+      // The answer record is already stored in `answers`.
+      setSelected(null)
+
+      setSubmitted(false)
+    } else {
+      finish()
+    }
+  }
+
+  async function finish() {
+    const records = pool.map((x) => ({
+      questionId: x.id,
+      selected: answers[x.id] ?? -1,
+      correct: (answers[x.id] ?? -1) === x.answer,
+    }))
+
+    const correct = records.filter((x) => x.correct).length
+
+    const attempt: Attempt = {
+      id: crypto.randomUUID(),
+      topicId: topic as TopicId | 'all',
+      score: pct(correct, pool.length),
+      total: pool.length,
+      correct,
+      incorrect: pool.length - correct,
+      duration: Math.round((Date.now() - start) / 1000),
+      date: new Date().toISOString(),
+      answers: records,
+    }
+
+    await saveAttempt(attempt)
+
+    nav(`/results/${attempt.id}`)
+  }
+
+  // Is the currently selected DISPLAY position actually correct?
+  const selectedIsCorrect =
+    selected !== null &&
+    shuffledOptions[selected]?.originalIndex === q.answer
+
+  return (
+    <div className="quiz-page">
+      <div className="quiz-top">
+        <Link to="/practice" className="text-link">
+          <ChevronLeft />
+          Exit
+        </Link>
+
+        <div className="quiz-progress">
+          <span>
+            Question {index + 1} of {pool.length}
+          </span>
+
+          <div className="bar">
+            <i
+              style={{
+                width: `${((index + 1) / pool.length) * 100}%`,
+              }}
+            />
+          </div>
+        </div>
+
+        <span className="pill">{difficulty}</span>
+      </div>
+
+      <div className="quiz-card">
+        <div className="question-meta">
+          <span>{topicName(q.topicId)}</span>
+          <span>{q.concept}</span>
+        </div>
+
+        <h1>{q.question}</h1>
+
+        <div className="options">
+          {shuffledOptions.map((item, i) => (
+            <button
+              key={item.option}
+              className={`option ${
+                selected === i ? 'selected' : ''
+              } ${
+                submitted &&
+                item.originalIndex === q.answer
+                  ? 'correct'
+                  : ''
+              } ${
+                submitted &&
+                selected === i &&
+                item.originalIndex !== q.answer
+                  ? 'wrong'
+                  : ''
+              }`}
+              onClick={() => choose(i)}
+            >
+              <span>{String.fromCharCode(65 + i)}</span>
+
+              {item.option}
+
+              {submitted &&
+              item.originalIndex === q.answer ? (
+                <CheckCircle2 />
+              ) : null}
+            </button>
+          ))}
+        </div>
+
+        {submitted && (
+          <div
+            className={`feedback ${
+              selectedIsCorrect ? 'good' : 'bad'
+            }`}
+          >
+            <b>
+              {selectedIsCorrect
+                ? 'Correct!'
+                : 'Not quite.'}
+            </b>
+
+            <p>{q.explanation}</p>
+
+            <small>
+              <strong>Simple:</strong>{' '}
+              {q.simpleExplanation}
+            </small>
+
+            <small>
+              <strong>Memory tip:</strong>{' '}
+              {q.memoryTip}
+            </small>
+          </div>
+        )}
+
+        <div className="quiz-actions">
+          {submitted ? (
+            <button
+              className="btn primary"
+              onClick={next}
+            >
+              {index === pool.length - 1
+                ? 'Finish Quiz'
+                : 'Next Question'}
+
+              <ChevronRight />
+            </button>
+          ) : (
+            <button
+              className="btn primary"
+              disabled={selected === null}
+              onClick={() => setSubmitted(true)}
+            >
+              Check Answer
+              <CheckCircle2 />
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
 
 function Results() {
   const id = useLocation().pathname.split('/').pop()
@@ -757,6 +974,11 @@ function Review() {
     )
     .filter((x) => x.q)
 
+  function practiceWeakArea(topicId: TopicId) {
+    window.location.href =
+      `/practice/run?topic=${topicId}&difficulty=Mixed&count=10`
+  }
+
   return (
     <Page
       title="Review Mistakes"
@@ -786,20 +1008,42 @@ function Review() {
               <h2>{q!.question}</h2>
 
               <p className="wrong-answer">
-                Your answer:{' '}
+                <strong>Your answer:</strong>{' '}
                 {x.selected >= 0
                   ? q!.options[x.selected]
                   : 'No answer'}
               </p>
 
               <p className="right-answer">
-                Correct answer: {q!.options[q!.answer]}
+                <strong>Correct answer:</strong>{' '}
+                {q!.options[q!.answer]}
               </p>
 
               <div className="feedback good">
                 <b>Explanation</b>
                 <p>{q!.explanation}</p>
-                <small>{q!.memoryTip}</small>
+
+                <div className="review-learning-point">
+                  <strong>Simple explanation</strong>
+                  <p>{q!.simpleExplanation}</p>
+                </div>
+
+                <div className="review-learning-point">
+                  <strong>🧠 Memory tip</strong>
+                  <p>{q!.memoryTip}</p>
+                </div>
+              </div>
+
+              <div className="review-actions">
+                <button
+                  className="btn primary"
+                  onClick={() =>
+                    practiceWeakArea(q!.topicId)
+                  }
+                >
+                  <RotateCcw size={18} />
+                  Practice This Weak Area
+                </button>
               </div>
             </div>
           ))}
@@ -816,50 +1060,109 @@ function Recovery() {
     getAttempts().then(setAttempts)
   }, [])
 
-  const rec = topics
-    .map((t) => {
-      let c = 0
-      let n = 0
+  // Count wrong answers by topic
+  const topicStats = topics
+    .map((topic) => {
+      const topicAttempts = attempts.filter(
+        (attempt) =>
+          attempt.topicId === topic.id ||
+          attempt.topicId === 'all'
+      )
 
-      attempts.forEach((a) => {
-        if (a.topicId === t.id) {
-          c += a.correct
-          n += a.total
-        }
-      })
+  const wrongQuestions = topicAttempts
+  .flatMap((attempt) =>
+    attempt.answers
+      .filter((answer) => !answer.correct)
+      .map((answer) => ({
+        answer,
+        question: questions.find(
+          (q) => q.id === answer.questionId
+        ),
+      }))
+  )
+  .filter(
+    (item) =>
+      item.question &&
+      item.question.topicId === topic.id
+  )
+
+      const totalQuestions = topicAttempts.reduce(
+        (sum, attempt) => {
+          return (
+            sum +
+            attempt.answers.filter((answer) => {
+              const q = questions.find(
+                (question) => question.id === answer.questionId
+              )
+
+              return q?.topicId === topic.id
+            }).length
+          )
+        },
+        0
+      )
+
+      const wrongCount = wrongQuestions.length
+
+      const accuracy =
+        totalQuestions > 0
+          ? Math.round(
+              ((totalQuestions - wrongCount) /
+                totalQuestions) *
+                100
+            )
+          : 0
 
       return {
-        ...t,
-        score: pct(c, n),
-        n,
+        topic,
+        wrongCount,
+        totalQuestions,
+        accuracy,
+        wrongQuestions,
       }
     })
-    .filter((x) => x.n)
-    .sort((a, b) => a.score - b.score)
+    .filter((item) => item.totalQuestions > 0)
+    .sort((a, b) => {
+      // Weakest topic first
+      if (a.accuracy !== b.accuracy) {
+        return a.accuracy - b.accuracy
+      }
+
+      return b.wrongCount - a.wrongCount
+    })
+
+  const weakest = topicStats[0]
+
+  function practiceTopic(topicId: TopicId) {
+    window.location.href =
+      `/practice/run?topic=${topicId}&difficulty=Mixed&count=10`
+  }
 
   return (
     <Page
       title="Smart Recovery"
       subtitle="A targeted plan built from the areas that need the most practice."
     >
-      <div className="recovery-hero">
+      <div className="recovery-hero panel">
+        <div>
+          <span className="eyebrow">Your recovery plan</span>
+
+          <h2>
+            Strengthen the concepts that are holding you back.
+          </h2>
+
+          <p>
+            Recommendations use your practice performance.
+            They are learning guidance, not an exam prediction.
+          </p>
+        </div>
+
         <div className="feature-icon">
           <Zap />
         </div>
-
-        <span className="eyebrow">Your recovery plan</span>
-
-        <h1>
-          Strengthen the concepts that are holding you back.
-        </h1>
-
-        <p>
-          Recommendations use your practice performance.
-          They are learning guidance, not an exam prediction.
-        </p>
       </div>
 
-      {rec.length === 0 ? (
+      {topicStats.length === 0 ? (
         <div className="panel">
           <Empty
             icon={Zap}
@@ -869,57 +1172,413 @@ function Recovery() {
           />
         </div>
       ) : (
-        <div className="recovery-list">
-          {rec.map((t, i) => (
-            <div
-              className="panel recovery-item"
-              key={t.id}
-            >
-              <div className="number">
-                {i + 1}
+        <>
+          {weakest && (
+            <div className="panel recovery-focus">
+              <div className="question-meta">
+                <span>Priority area</span>
+                <span>{weakest.accuracy}% accuracy</span>
               </div>
 
-              <div>
-                <span className="eyebrow">
-                  Priority {i + 1}
-                </span>
+              <h2>{weakest.topic.name}</h2>
 
-                <h2>{t.name}</h2>
+              <p>
+                You have missed {weakest.wrongCount}{' '}
+                {weakest.wrongCount === 1
+                  ? 'question'
+                  : 'questions'}{' '}
+                in this area. Practice it again before moving
+                on.
+              </p>
+
+              <button
+                className="btn primary"
+                onClick={() =>
+                  practiceTopic(weakest.topic.id)
+                }
+              >
+                <RotateCcw size={18} />
+                Practice Weak Area
+              </button>
+            </div>
+          )}
+
+          <div className="recovery-grid">
+            {topicStats.map((item) => (
+              <div
+                className="panel recovery-card"
+                key={item.topic.id}
+              >
+                <div className="question-meta">
+                  <span>{item.topic.name}</span>
+
+                  <span>
+                    {item.accuracy}% accuracy
+                  </span>
+                </div>
+
+                <h3>{item.topic.name}</h3>
 
                 <p>
-                  You are currently at{' '}
-                  <b>{t.score}% accuracy</b> across{' '}
-                  {t.n} questions. A targeted session can
-                  strengthen this area.
+                  {item.wrongCount === 0
+                    ? 'Great work. Keep this topic fresh.'
+                    : `${item.wrongCount} ${
+                        item.wrongCount === 1
+                          ? 'missed question'
+                          : 'missed questions'
+                      } from your practice.`}
                 </p>
 
-                <Link
-                  className="btn primary"
-                  to={`/practice?topic=${t.id}`}
+                <div className="progress">
+                  <i
+                    style={{
+                      width: `${item.accuracy}%`,
+                    }}
+                  />
+                </div>
+
+                <button
+                  className="btn secondary"
+                  onClick={() =>
+                    practiceTopic(item.topic.id)
+                  }
                 >
-                  Practice this area
-                  <ArrowRight />
-                </Link>
+                  Practice Topic
+                  <ArrowRight size={17} />
+                </button>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        </>
       )}
     </Page>
   )
 }
 
-function StudyBuddy(){const [messages,setMessages]=useState<{role:'ai'|'user',text:string}[]>([{role:'ai',text:"Hi! I'm your AZ-900 Study Buddy. Ask me to explain a concept, give you an analogy, or create a short original practice question."}]);const [input,setInput]=useState('');function send(text=input){if(!text.trim())return;setMessages(m=>[...m,{role:'user',text},{role:'ai',text:`Here's a beginner-friendly way to think about "${text}": start with the core idea, connect it to a real-world analogy, then test yourself with one small example. For this demo, the AI endpoint is not configured yet. Connect Gemini through a secure server-side endpoint to enable live tutoring.`}]);setInput('')}return <Page title="AI Study Buddy" subtitle="Ask questions. Get simple explanations. Learn with confidence."><div className="buddy"><div className="buddy-head"><div className="feature-icon"><Sparkles/></div><div><h2>Your Azure learning companion</h2><p>Focused on fundamentals, analogies and original practice.</p></div></div><div className="suggestions">{['Explain IaaS vs PaaS vs SaaS','What is a Resource Group?','Explain RBAC simply','Give me an analogy for Azure regions','Quiz me on cloud concepts'].map(s=><button key={s} onClick={()=>send(s)}>{s}</button>)}</div><div className="chat">{messages.map((m,i)=><div className={`bubble ${m.role}`} key={i}>{m.text}</div>)}</div><div className="chat-input"><input value={input} onChange={e=>setInput(e.target.value)} onKeyDown={e=>{if(e.key==='Enter')send()}} placeholder="Ask about an Azure concept..."/><button className="btn primary" onClick={()=>send()}>Send</button></div><small className="disclaimer">Live AI requires a secure server-side Gemini/API configuration. Never expose API keys in frontend code.</small></div></Page>}
+function StudyBuddy() {
+  const [messages, setMessages] = useState<
+    { role: 'ai' | 'user'; text: string }[]
+  >([
+    {
+      role: 'ai',
+      text: "Hi! I'm your AZ-900 Study Buddy. I'll explain a concept simply, give you a mini question, check your answer, and guide you to the next step.",
+    },
+  ])
+
+  const [input, setInput] = useState('')
+  const [activeQuestion, setActiveQuestion] =
+    useState<Question | null>(null)
+
+  const [waitingForAnswer, setWaitingForAnswer] =
+    useState(false)
+
+  const [answered, setAnswered] = useState(false)
+
+  function addAI(text: string) {
+    setMessages((m) => [
+      ...m,
+      {
+        role: 'ai',
+        text,
+      },
+    ])
+  }
+
+  function addUser(text: string) {
+    setMessages((m) => [
+      ...m,
+      {
+        role: 'user',
+        text,
+      },
+    ])
+  }
+
+  function startPracticeQuestion(topicId?: TopicId) {
+    const pool = questions.filter(
+      (q) => !topicId || q.topicId === topicId
+    )
+
+    if (pool.length === 0) {
+      addAI(
+        'I could not find a practice question for that topic yet.'
+      )
+      return
+    }
+
+    const q =
+      pool[Math.floor(Math.random() * pool.length)]
+
+    setActiveQuestion(q)
+    setWaitingForAnswer(true)
+    setAnswered(false)
+
+    addAI(
+  `📝 MINI QUESTION\n\n${q.question}\n\nA. ${q.options[0]}\n\nB. ${q.options[1]}\n\nC. ${q.options[2]}\n\nD. ${q.options[3]}\n\nReply with A, B, C, or D.`
+)
+  }
+
+  function explainConcept(text: string) {
+    const lower = text.toLowerCase()
+
+    let explanation =
+      `Think of ${text} as an Azure building block. ` +
+      `The key idea is to understand what it does, why you use it, and when it is useful.`
+
+    if (
+      lower.includes('iaas') ||
+      lower.includes('paas') ||
+      lower.includes('saas')
+    ) {
+      explanation =
+        'IaaS, PaaS and SaaS describe how much of the technology Azure manages for you. IaaS gives you the most control, PaaS lets Azure manage more of the platform, and SaaS gives you a ready-to-use application.'
+    } else if (
+      lower.includes('resource group')
+    ) {
+      explanation =
+        'A Resource Group is like a folder for Azure resources. You can put related resources together so they are easier to manage, monitor and delete.'
+    } else if (lower.includes('rbac')) {
+      explanation =
+        'RBAC means Role-Based Access Control. It controls who can do what with Azure resources. Think: person + role + resource.'
+    } else if (lower.includes('region')) {
+      explanation =
+        'An Azure region is a geographic area containing one or more Azure datacenters. Choosing a region helps with location, performance and data-residency requirements.'
+    } else if (lower.includes('availability')) {
+      explanation =
+        'Availability means how often a service is operational and accessible. Azure uses redundancy and other features to help keep services available.'
+    }
+
+    addAI(explanation)
+
+    setTimeout(() => {
+      startPracticeQuestion()
+    }, 500)
+  }
+
+  function checkAnswer(answerText: string) {
+    if (!activeQuestion) {
+      return
+    }
+
+    const answer = answerText.trim().toLowerCase()
+
+    const letters = ['a', 'b', 'c', 'd']
+
+    let selected = -1
+
+    if (letters.includes(answer)) {
+      selected = letters.indexOf(answer)
+    } else {
+      selected = activeQuestion.options.findIndex(
+        (option) =>
+          option.toLowerCase() === answer
+      )
+    }
+
+    if (selected === -1) {
+      addAI(
+        'Please answer with A, B, C, D, or type the full answer.'
+      )
+      return
+    }
+
+    const correct =
+      selected === activeQuestion.answer
+
+    setWaitingForAnswer(false)
+    setAnswered(true)
+
+   if (correct) {
+  addAI(
+    `✅ CORRECT!\n\n${activeQuestion.explanation}\n\n💡 SIMPLE EXPLANATION\n${activeQuestion.simpleExplanation}\n\n🧠 MEMORY TIP\n${activeQuestion.memoryTip}\n\n➡️ Choose a next step below.`
+  )
+} else {
+  addAI(
+    `❌ NOT QUITE.\n\n✅ CORRECT ANSWER\n${activeQuestion.options[activeQuestion.answer]}\n\n📖 EXPLANATION\n${activeQuestion.explanation}\n\n💡 SIMPLE EXPLANATION\n${activeQuestion.simpleExplanation}\n\n🧠 MEMORY TIP\n${activeQuestion.memoryTip}\n\n➡️ Choose a next step below.`
+  )
+}
+
+    setInput('')
+  }
+
+  function send() {
+    const text = input.trim()
+
+    if (!text) {
+      return
+    }
+
+    addUser(text)
+    setInput('')
+
+    if (waitingForAnswer) {
+      checkAnswer(text)
+      return
+    }
+
+    const lower = text.toLowerCase()
+
+    if (
+      lower.includes('quiz me') ||
+      lower.includes('test me') ||
+      lower.includes('question')
+    ) {
+      startPracticeQuestion()
+      return
+    }
+
+    explainConcept(text)
+  }
+
+  return (
+    <Page
+      title="AI Study Buddy"
+      subtitle="Ask questions. Get simple explanations. Practice what you learn."
+    >
+      <div className="buddy">
+        <div className="buddy-head">
+          <div className="feature-icon">
+            <Sparkles />
+          </div>
+
+          <div>
+            <h2>Your Azure learning companion</h2>
+            <p>
+              Learn a concept, answer a mini question,
+              then get immediate feedback.
+            </p>
+          </div>
+        </div>
+
+        <div className="suggestions">
+          {[
+            'Explain IaaS vs PaaS vs SaaS',
+            'What is a Resource Group?',
+            'Explain RBAC simply',
+            'Explain Azure regions',
+            'Quiz me on cloud concepts',
+          ].map((suggestion) => (
+            <button
+              key={suggestion}
+              onClick={() => {
+                addUser(suggestion)
+
+                if (
+                  suggestion
+                    .toLowerCase()
+                    .includes('quiz me')
+                ) {
+                  startPracticeQuestion()
+                } else {
+                  explainConcept(suggestion)
+                }
+              }}
+            >
+              {suggestion}
+            </button>
+          ))}
+        </div>
+
+        <div className="chat">
+          {messages.map((message, index) => (
+            <div
+              className={`bubble ${message.role}`}
+              key={index}
+            >
+              {message.text}
+            </div>
+          ))}
+        </div>
+
+        {answered && activeQuestion && (
+          <div className="buddy-next">
+            <button
+              className="btn primary"
+              onClick={() => {
+                startPracticeQuestion()
+              }}
+            >
+              <RotateCcw size={18} />
+              Try Another Question
+            </button>
+
+            <button
+              className="btn"
+              onClick={() => {
+                setAnswered(false)
+                setActiveQuestion(null)
+                setWaitingForAnswer(false)
+
+                const topic =
+                  topicName(
+                    activeQuestion.topicId
+                  )
+
+                addAI(
+                  `Let's learn more about ${topic}. I'll explain it simply, then give you another question.`
+                )
+
+                setTimeout(() => {
+                  explainConcept(topic)
+                }, 300)
+              }}
+            >
+              <BookOpen size={18} />
+              Learn This Topic
+            </button>
+          </div>
+        )}
+
+        <div className="chat-input">
+          <input
+            value={input}
+            onChange={(e) =>
+              setInput(e.target.value)
+            }
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                send()
+              }
+            }}
+            placeholder={
+              waitingForAnswer
+                ? 'Type A, B, C, D, or your answer...'
+                : 'Ask about an Azure concept...'
+            }
+          />
+
+          <button
+            className="btn primary"
+            onClick={send}
+          >
+            Send
+          </button>
+        </div>
+
+        <small className="disclaimer">
+          Study Buddy currently uses the original
+          AZ-900 learning content in this app.
+          Live AI can be connected later through a
+          secure server-side endpoint.
+        </small>
+      </div>
+    </Page>
+  )
+}
 
 function Profile() {
   const [user, setUser] = useState<any>(null)
   const [attempts, setAttempts] = useState<Attempt[]>([])
 
   useEffect(() => {
-    if (!supabase) return
+    if (supabase) {
+      supabase.auth.getUser().then(({ data }) => {
+        setUser(data.user ?? null)
+      })
+    }
 
-    supabase.auth.getUser().then(({ data }) => {
-      setUser(data.user ?? null)
+    getAttempts().then((savedAttempts) => {
+      setAttempts(savedAttempts)
     })
   }, [])
 
@@ -929,6 +1588,16 @@ function Profile() {
     'Learner'
 
   const email = user?.email || ''
+
+  const totalQuestions = attempts.reduce(
+    (total, attempt) => total + attempt.total,
+    0
+  )
+
+  const totalCorrect = attempts.reduce(
+    (total, attempt) => total + attempt.correct,
+    0
+  )
 
   return (
     <Page
@@ -960,14 +1629,14 @@ function Profile() {
           <Stat
             icon={Target}
             label="Questions"
-            value={attempts.reduce((a, x) => a + x.total, 0)}
+            value={totalQuestions}
             note="Answered"
           />
 
           <Stat
             icon={CheckCircle2}
             label="Correct"
-            value={attempts.reduce((a, x) => a + x.correct, 0)}
+            value={totalCorrect}
             note="Total correct"
           />
         </div>
@@ -1104,6 +1773,14 @@ function SettingsPage(){
         }
       />
 
+<Route
+  path="/results/:id"
+  element={
+    <Shell>
+      <Results />
+    </Shell>
+  }
+/>
       <Route
         path="/results/:id"
         element={

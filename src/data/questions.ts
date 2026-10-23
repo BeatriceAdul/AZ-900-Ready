@@ -1022,3 +1022,560 @@ export const questions: Question[] = [
     "concept": "Resource locks"
   }
 ]
+
+const additionalAdvancedQuestions: Question[] = [
+  // =========================================================
+  // CLOUD CONCEPTS — ADVANCED
+  // =========================================================
+
+  {
+    id: 'cc-adv-1',
+    topicId: 'cloud-concepts',
+    question: 'A company wants to reduce downtime if one cloud component fails. Which concept should guide this design?',
+    options: [
+      'High availability',
+      'Vertical scaling',
+      'Capital expenditure',
+      'Manual deployment'
+    ],
+    answer: 0,
+    explanation: 'High availability uses redundancy and resilient designs to keep services running when components fail.',
+    simpleExplanation: 'High availability means designing so one failure does not stop everything.',
+    memoryTip: 'High availability = keep the service available.',
+    difficulty: 'Advanced',
+    concept: 'High availability'
+  },
+
+  {
+    id: 'cc-adv-2',
+    topicId: 'cloud-concepts',
+    question: 'An application automatically adds compute resources when demand increases. Which cloud benefit is demonstrated?',
+    options: [
+      'Elasticity',
+      'Governance',
+      'Data residency',
+      'Fault isolation'
+    ],
+    answer: 0,
+    explanation: 'Elasticity allows resources to increase or decrease automatically according to demand.',
+    simpleExplanation: 'Elasticity means the cloud can stretch or shrink resources as needed.',
+    memoryTip: 'Elastic = grows and shrinks with demand.',
+    difficulty: 'Advanced',
+    concept: 'Elasticity'
+  },
+
+  {
+    id: 'cc-adv-3',
+    topicId: 'cloud-concepts',
+    question: 'A company keeps sensitive infrastructure in its own datacenter but uses Azure for additional capacity. Which cloud model best describes this?',
+    options: [
+      'Public cloud',
+      'Private cloud',
+      'Hybrid cloud',
+      'Community cloud'
+    ],
+    answer: 2,
+    explanation: 'A hybrid cloud combines private infrastructure with public cloud services.',
+    simpleExplanation: 'Hybrid means using your own environment together with the public cloud.',
+    memoryTip: 'Hybrid = private + public.',
+    difficulty: 'Advanced',
+    concept: 'Hybrid cloud'
+  },
+
+  {
+    id: 'cc-adv-4',
+    topicId: 'cloud-concepts',
+    question: 'Which situation best demonstrates the consumption-based cloud pricing model?',
+    options: [
+      'Buying servers for five years upfront',
+      'Paying for resources according to actual usage',
+      'Buying a fixed number of physical servers',
+      'Paying the same amount regardless of usage'
+    ],
+    answer: 1,
+    explanation: 'Consumption-based pricing charges customers based on the resources they actually consume.',
+    simpleExplanation: 'You pay for what you use instead of buying everything upfront.',
+    memoryTip: 'Consumption = pay for what you consume.',
+    difficulty: 'Advanced',
+    concept: 'Consumption-based model'
+  },
+
+  {
+    id: 'cc-adv-5',
+    topicId: 'cloud-concepts',
+    question: 'A workload must continue operating even when a single server fails. What design principle is most important?',
+    options: [
+      'Redundancy',
+      'Manual scaling',
+      'Single tenancy',
+      'Local storage only'
+    ],
+    answer: 0,
+    explanation: 'Redundancy provides multiple resources so the workload can continue if one resource fails.',
+    simpleExplanation: 'Have a backup resource ready to take over when one fails.',
+    memoryTip: 'Redundancy = more than one resource.',
+    difficulty: 'Advanced',
+    concept: 'Redundancy'
+  },
+
+  {
+    id: 'cc-adv-6',
+    topicId: 'cloud-concepts',
+    question: 'A business wants to move quickly without purchasing physical servers. Which cloud benefit is most relevant?',
+    options: [
+      'Agility',
+      'Data sovereignty',
+      'Physical isolation',
+      'Hardware ownership'
+    ],
+    answer: 0,
+    explanation: 'Cloud agility allows organizations to provision resources quickly and respond rapidly to changing requirements.',
+    simpleExplanation: 'Agility means you can create and change resources quickly.',
+    memoryTip: 'Agility = move quickly.',
+    difficulty: 'Advanced',
+    concept: 'Cloud agility'
+  },
+
+  {
+    id: 'cc-adv-7',
+    topicId: 'cloud-concepts',
+    question: 'Which statement best distinguishes scalability from elasticity?',
+    options: [
+      'Scalability handles growth, while elasticity can automatically adjust to changing demand',
+      'They always mean exactly the same thing',
+      'Scalability only applies to storage',
+      'Elasticity only applies to physical servers'
+    ],
+    answer: 0,
+    explanation: 'Scalability is the ability to handle increased workload, while elasticity emphasizes dynamic adjustment as demand changes.',
+    simpleExplanation: 'Scalability handles growth; elasticity adjusts resources as demand changes.',
+    memoryTip: 'Scale = handle more. Elastic = adjust automatically.',
+    difficulty: 'Advanced',
+    concept: 'Scalability and elasticity'
+  },
+
+  {
+    id: 'cc-adv-8',
+    topicId: 'cloud-concepts',
+    question: 'Under the shared responsibility model, which responsibility generally remains with the customer?',
+    options: [
+      'Physical security of Azure datacenters',
+      'Security of customer data and identities',
+      'Maintenance of Azure physical servers',
+      'Power management of Azure datacenters'
+    ],
+    answer: 1,
+    explanation: 'Customers remain responsible for aspects such as their data, identities, accounts and access configuration.',
+    simpleExplanation: 'Azure secures the cloud infrastructure; customers still secure what they put in the cloud.',
+    memoryTip: 'Think: security OF the cloud vs security IN the cloud.',
+    difficulty: 'Advanced',
+    concept: 'Shared responsibility'
+  },
+
+  {
+    id: 'cc-adv-9',
+    topicId: 'cloud-concepts',
+    question: 'A company wants to avoid paying for unused infrastructure during periods of low demand. Which cloud capability helps most?',
+    options: [
+      'Elastic scaling',
+      'Physical server ownership',
+      'Fixed capacity',
+      'Manual procurement'
+    ],
+    answer: 0,
+    explanation: 'Elastic scaling allows resources to decrease when demand falls, reducing unnecessary resource consumption.',
+    simpleExplanation: 'Scale down when fewer resources are needed.',
+    memoryTip: 'High demand: scale up. Low demand: scale down.',
+    difficulty: 'Advanced',
+    concept: 'Elastic scaling'
+  },
+
+  {
+    id: 'cc-adv-10',
+    topicId: 'cloud-concepts',
+    question: 'Which cloud model gives an organization the greatest control over its physical infrastructure?',
+    options: [
+      'Public cloud',
+      'Private cloud',
+      'SaaS',
+      'Serverless'
+    ],
+    answer: 1,
+    explanation: 'A private cloud provides greater organizational control over infrastructure and its environment.',
+    simpleExplanation: 'Private cloud gives the organization more control over its environment.',
+    memoryTip: 'Private = more direct control.',
+    difficulty: 'Advanced',
+    concept: 'Private cloud'
+  },
+
+  // =========================================================
+  // AZURE ARCHITECTURE & SERVICES — ADVANCED
+  // =========================================================
+
+  {
+    id: 'as-adv-1',
+    topicId: 'azure-architecture',
+    question: 'An application must remain available if an Azure datacenter within a region becomes unavailable. What should the design use?',
+    options: [
+      'Availability zones',
+      'One virtual machine',
+      'One storage disk',
+      'A single region only'
+    ],
+    answer: 0,
+    explanation: 'Availability zones are physically separate locations within an Azure region designed for high availability.',
+    simpleExplanation: 'Put important workloads across separate zones so one datacenter failure does not stop them.',
+    memoryTip: 'Zones = separate locations inside a region.',
+    difficulty: 'Advanced',
+    concept: 'Availability zones'
+  },
+
+  {
+    id: 'as-adv-2',
+    topicId: 'azure-architecture',
+    question: 'A company needs protection against an entire Azure region becoming unavailable. Which approach is most appropriate?',
+    options: [
+      'Use multiple Azure regions',
+      'Use one availability zone',
+      'Use one virtual machine',
+      'Use only a resource group'
+    ],
+    answer: 0,
+    explanation: 'Using multiple regions can provide resilience against a regional outage.',
+    simpleExplanation: 'If one region fails, another region can continue serving users.',
+    memoryTip: 'Zone protects within a region; region protects against regional failure.',
+    difficulty: 'Advanced',
+    concept: 'Azure regions'
+  },
+
+  {
+    id: 'as-adv-3',
+    topicId: 'azure-architecture',
+    question: 'Which Azure service is most appropriate for running virtual machines when an organization needs control over the operating system?',
+    options: [
+      'Azure Virtual Machines',
+      'Azure Functions',
+      'Azure Blob Storage',
+      'Azure DNS'
+    ],
+    answer: 0,
+    explanation: 'Azure Virtual Machines provide virtualized compute while allowing significant control over the operating system and software.',
+    simpleExplanation: 'VMs are useful when you need control over the operating system.',
+    memoryTip: 'VM = virtual computer with OS control.',
+    difficulty: 'Advanced',
+    concept: 'Azure Virtual Machines'
+  },
+
+  {
+    id: 'as-adv-4',
+    topicId: 'azure-architecture',
+    question: 'A developer wants to run small pieces of code in response to events without managing servers. Which service fits best?',
+    options: [
+      'Azure Functions',
+      'Azure Virtual Machines',
+      'Azure Virtual Network',
+      'Azure Files'
+    ],
+    answer: 0,
+    explanation: 'Azure Functions is a serverless compute service designed for event-driven workloads.',
+    simpleExplanation: 'Functions lets you run code without managing the server yourself.',
+    memoryTip: 'Functions = event-driven serverless code.',
+    difficulty: 'Advanced',
+    concept: 'Azure Functions'
+  },
+
+  {
+    id: 'as-adv-5',
+    topicId: 'azure-architecture',
+    question: 'A company needs object storage for images and videos. Which Azure service is most appropriate?',
+    options: [
+      'Azure Blob Storage',
+      'Azure Virtual Machines',
+      'Azure DNS',
+      'Azure VPN Gateway'
+    ],
+    answer: 0,
+    explanation: 'Azure Blob Storage is designed for storing large amounts of unstructured data such as images, videos and documents.',
+    simpleExplanation: 'Blob Storage is like a huge cloud storage area for files and other objects.',
+    memoryTip: 'Blob = big unstructured objects.',
+    difficulty: 'Advanced',
+    concept: 'Azure Blob Storage'
+  },
+
+  {
+    id: 'as-adv-6',
+    topicId: 'azure-architecture',
+    question: 'Which Azure networking service provides private network connectivity for Azure resources?',
+    options: [
+      'Azure Virtual Network',
+      'Azure Blob Storage',
+      'Azure Functions',
+      'Azure Monitor'
+    ],
+    answer: 0,
+    explanation: 'Azure Virtual Network provides networking capabilities that allow Azure resources to communicate securely.',
+    simpleExplanation: 'A virtual network is like a private network in Azure.',
+    memoryTip: 'VNet = Azure private network.',
+    difficulty: 'Advanced',
+    concept: 'Azure Virtual Network'
+  },
+
+  {
+    id: 'as-adv-7',
+    topicId: 'azure-architecture',
+    question: 'A web application needs traffic distributed across multiple backend servers. Which service is designed for this purpose?',
+    options: [
+      'Azure Load Balancer',
+      'Azure Blob Storage',
+      'Azure Key Vault',
+      'Azure DNS'
+    ],
+    answer: 0,
+    explanation: 'Azure Load Balancer distributes incoming network traffic across backend resources.',
+    simpleExplanation: 'The load balancer shares incoming work between servers.',
+    memoryTip: 'Load balancer = share the traffic.',
+    difficulty: 'Advanced',
+    concept: 'Load balancing'
+  },
+
+  {
+    id: 'as-adv-8',
+    topicId: 'azure-architecture',
+    question: 'Which Azure service is designed to store secrets, keys and certificates securely?',
+    options: [
+      'Azure Key Vault',
+      'Azure Storage Account',
+      'Azure Load Balancer',
+      'Azure Virtual Network'
+    ],
+    answer: 0,
+    explanation: 'Azure Key Vault securely stores and manages secrets, cryptographic keys and certificates.',
+    simpleExplanation: 'Key Vault is a secure place for important secrets and keys.',
+    memoryTip: 'Key Vault = protect keys and secrets.',
+    difficulty: 'Advanced',
+    concept: 'Azure Key Vault'
+  },
+
+  {
+    id: 'as-adv-9',
+    topicId: 'azure-architecture',
+    question: 'A company wants users to access Azure services using a central identity system. Which service provides the identity platform?',
+    options: [
+      'Microsoft Entra ID',
+      'Azure Blob Storage',
+      'Azure Load Balancer',
+      'Azure Virtual Network'
+    ],
+    answer: 0,
+    explanation: 'Microsoft Entra ID provides identity and access management capabilities for users and applications.',
+    simpleExplanation: 'Entra ID manages identities and access to resources.',
+    memoryTip: 'Entra ID = identity and access.',
+    difficulty: 'Advanced',
+    concept: 'Microsoft Entra ID'
+  },
+
+  {
+    id: 'as-adv-10',
+    topicId: 'azure-architecture',
+    question: 'Which design best improves application resilience against failure of a single compute instance?',
+    options: [
+      'Run multiple instances',
+      'Use only one large instance',
+      'Disable monitoring',
+      'Store everything locally'
+    ],
+    answer: 0,
+    explanation: 'Multiple instances provide redundancy and reduce dependence on a single compute resource.',
+    simpleExplanation: 'Several instances mean one failure does not necessarily stop the application.',
+    memoryTip: 'Multiple instances = less dependence on one server.',
+    difficulty: 'Advanced',
+    concept: 'Compute resilience'
+  },
+
+  // =========================================================
+  // AZURE MANAGEMENT & GOVERNANCE — ADVANCED
+  // =========================================================
+
+  {
+    id: 'ag-adv-1',
+    topicId: 'azure-governance',
+    question: 'An organization wants to prevent users from creating resources outside approved Azure regions. Which service should it use?',
+    options: [
+      'Azure Policy',
+      'Azure Monitor',
+      'Azure Advisor',
+      'Azure Storage'
+    ],
+    answer: 0,
+    explanation: 'Azure Policy can enforce organizational rules such as allowed locations for resources.',
+    simpleExplanation: 'Azure Policy makes sure resources follow organizational rules.',
+    memoryTip: 'Policy = rules.',
+    difficulty: 'Advanced',
+    concept: 'Azure Policy'
+  },
+
+  {
+    id: 'ag-adv-2',
+    topicId: 'azure-governance',
+    question: 'A company wants to give an employee permission to manage virtual machines but not modify billing settings. Which capability should be used?',
+    options: [
+      'Azure RBAC',
+      'Azure Policy',
+      'Azure Monitor',
+      'Azure Advisor'
+    ],
+    answer: 0,
+    explanation: 'Azure role-based access control allows permissions to be assigned according to roles and scopes.',
+    simpleExplanation: 'RBAC controls who can perform which actions on Azure resources.',
+    memoryTip: 'RBAC = who can do what.',
+    difficulty: 'Advanced',
+    concept: 'Azure RBAC'
+  },
+
+  {
+    id: 'ag-adv-3',
+    topicId: 'azure-governance',
+    question: 'Which Azure service helps identify opportunities to improve cost, performance, reliability and security?',
+    options: [
+      'Azure Advisor',
+      'Azure DNS',
+      'Azure Blob Storage',
+      'Azure Virtual Network'
+    ],
+    answer: 0,
+    explanation: 'Azure Advisor provides recommendations related to cost, performance, reliability and security.',
+    simpleExplanation: 'Advisor gives recommendations for improving your Azure environment.',
+    memoryTip: 'Advisor = recommendations.',
+    difficulty: 'Advanced',
+    concept: 'Azure Advisor'
+  },
+
+  {
+    id: 'ag-adv-4',
+    topicId: 'azure-governance',
+    question: 'A team needs to determine how much an Azure workload is costing over time. Which tool is most appropriate?',
+    options: [
+      'Microsoft Cost Management',
+      'Azure DNS',
+      'Azure Functions',
+      'Azure Load Balancer'
+    ],
+    answer: 0,
+    explanation: 'Microsoft Cost Management provides tools for analyzing and managing Azure spending.',
+    simpleExplanation: 'Cost Management helps you understand and control cloud spending.',
+    memoryTip: 'Cost Management = track and control spending.',
+    difficulty: 'Advanced',
+    concept: 'Cost Management'
+  },
+
+  {
+    id: 'ag-adv-5',
+    topicId: 'azure-governance',
+    question: 'An organization wants resources from different departments grouped and managed under a common hierarchy. Which Azure concept is useful?',
+    options: [
+      'Management groups',
+      'Availability zones',
+      'Storage containers',
+      'Virtual machines'
+    ],
+    answer: 0,
+    explanation: 'Management groups organize subscriptions into a hierarchy so governance can be applied across multiple subscriptions.',
+    simpleExplanation: 'Management groups help organize many Azure subscriptions.',
+    memoryTip: 'Management group = manage subscriptions together.',
+    difficulty: 'Advanced',
+    concept: 'Management groups'
+  },
+
+  {
+    id: 'ag-adv-6',
+    topicId: 'azure-governance',
+    question: 'Which Azure service provides centralized monitoring data such as metrics and logs from resources?',
+    options: [
+      'Azure Monitor',
+      'Azure Policy',
+      'Azure Advisor',
+      'Microsoft Cost Management'
+    ],
+    answer: 0,
+    explanation: 'Azure Monitor collects and analyzes monitoring data from Azure resources and applications.',
+    simpleExplanation: 'Azure Monitor watches what is happening in your Azure environment.',
+    memoryTip: 'Monitor = observe.',
+    difficulty: 'Advanced',
+    concept: 'Azure Monitor'
+  },
+
+  {
+    id: 'ag-adv-7',
+    topicId: 'azure-governance',
+    question: 'A company wants to automatically detect resources that violate an organizational configuration rule. Which service should be considered?',
+    options: [
+      'Azure Policy',
+      'Azure Blob Storage',
+      'Azure Functions',
+      'Azure DNS'
+    ],
+    answer: 0,
+    explanation: 'Azure Policy evaluates resources against organizational standards and can identify or prevent non-compliant configurations.',
+    simpleExplanation: 'Policy checks whether resources follow the rules.',
+    memoryTip: 'Policy checks compliance.',
+    difficulty: 'Advanced',
+    concept: 'Policy compliance'
+  },
+
+  {
+    id: 'ag-adv-8',
+    topicId: 'azure-governance',
+    question: 'Which capability helps ensure that users receive only the permissions needed for their responsibilities?',
+    options: [
+      'Role-based access control',
+      'Unlimited administrator access',
+      'Public network access',
+      'Resource duplication'
+    ],
+    answer: 0,
+    explanation: 'RBAC supports assigning appropriate roles and permissions at suitable scopes.',
+    simpleExplanation: 'Give people the permissions they actually need, not everything.',
+    memoryTip: 'RBAC supports least-privilege access.',
+    difficulty: 'Advanced',
+    concept: 'Least privilege'
+  },
+
+  {
+    id: 'ag-adv-9',
+    topicId: 'azure-governance',
+    question: 'A company wants to organize resources so they can be managed together and deleted together. What should it use?',
+    options: [
+      'Resource groups',
+      'Availability zones',
+      'Azure regions',
+      'Management groups'
+    ],
+    answer: 0,
+    explanation: 'Resource groups are logical containers for related Azure resources and help organize their lifecycle.',
+    simpleExplanation: 'A resource group is like a folder for related Azure resources.',
+    memoryTip: 'Resource group = group related resources.',
+    difficulty: 'Advanced',
+    concept: 'Resource groups'
+  },
+
+  {
+    id: 'ag-adv-10',
+    topicId: 'azure-governance',
+    question: 'Which Azure governance approach is most appropriate for enforcing consistent organizational standards across resources?',
+    options: [
+      'Azure Policy',
+      'Azure Load Balancer',
+      'Azure Blob Storage',
+      'Azure Functions'
+    ],
+    answer: 0,
+    explanation: 'Azure Policy can enforce and audit organizational standards across Azure resources.',
+    simpleExplanation: 'Use Policy when you need Azure resources to follow defined rules.',
+    memoryTip: 'Governance rules = Policy.',
+    difficulty: 'Advanced',
+    concept: 'Governance'
+  }
+]
+
+// Add the additional Advanced questions to the existing question bank.
+questions.push(...additionalAdvancedQuestions)
