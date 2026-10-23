@@ -264,3 +264,90 @@ The high-level architecture is:
                  │    Study Buddy       │
                  └──────────────────────┘
 ```
+
+---
+
+# Demo Flow
+
+The main learner journey is:
+
+1. Create an account or log in
+2. Open the Dashboard
+3. Start a Smart Quiz
+4. Answer practice questions
+5. Receive immediate feedback and explanations
+6. Complete the quiz and view the Results page
+7. Review incorrect answers
+8. Practice a weak area
+9. Use Smart Recovery for targeted practice
+10. Use the AI Study Buddy to understand difficult concepts
+11. Track progress over time
+
+This creates the learning loop:
+
+**Learn → Practice → Feedback → Recover → Improve**
+
+---
+
+# Security and Data Protection
+
+AZ-900 Ready uses Supabase Authentication to manage user accounts.
+
+User-specific learning data is associated with the authenticated user.
+
+Supabase Row Level Security (RLS) is used to help protect database records.
+
+Private service credentials should never be placed directly in frontend code.
+
+The application is designed so that AI credentials can be handled through a secure server-side or edge endpoint rather than being exposed to users.
+
+---
+
+# Deployment
+
+The application is deployed as a React web application using Netlify.
+
+The source code is managed using Git and GitHub.
+
+Production deployment uses:
+
+- React
+- TypeScript
+- Vite
+- Supabase
+- Netlify
+
+The application includes SPA routing configuration so routes such as the practice quiz continue to work when accessed directly or refreshed.
+
+---
+
+# Project Status
+
+**Status: Working prototype / hackathon-ready**
+
+The current application includes:
+
+- User authentication
+- Persistent user progress
+- Smart Quiz
+- Multiple learning areas
+- Difficulty-based practice
+- Instant feedback
+- Explanations and memory tips
+- Quiz results
+- Review Mistakes
+- Smart Recovery
+- Weak-area practice
+- AI Study Buddy
+- Dashboard analytics
+- Netlify deployment
+
+---
+
+# Disclaimer
+
+AZ-900 Ready is an unofficial educational project.
+
+It is not affiliated with, endorsed by, or sponsored by Microsoft.
+
+The application uses original educational practice content and does not reproduce real Microsoft certification examination questions.
