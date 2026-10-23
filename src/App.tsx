@@ -956,6 +956,8 @@ useEffect(() => {
 }
 
 function Review() {
+    const nav = useNavigate()
+
   const [attempts, setAttempts] = useState<Attempt[]>([])
 
   useEffect(() => {
@@ -974,7 +976,6 @@ function Review() {
     )
     .filter((x) => x.q)
 
-  const nav = useNavigate()
 
 function practiceWeakArea(topicId: TopicId) {
   nav(`/practice/run?topic=${topicId}&difficulty=Mixed&count=10`)
@@ -1055,6 +1056,7 @@ function practiceWeakArea(topicId: TopicId) {
 }
 
 function Recovery() {
+  const nav = useNavigate()
   const [attempts, setAttempts] = useState<Attempt[]>([])
 
   useEffect(() => {
@@ -1135,9 +1137,8 @@ function Recovery() {
   const weakest = topicStats[0]
 
   function practiceTopic(topicId: TopicId) {
-    window.location.href =
-      `/practice/run?topic=${topicId}&difficulty=Mixed&count=10`
-  }
+  nav(`/practice/run?topic=${topicId}&difficulty=Mixed&count=10`)
+}
 
   return (
     <Page
