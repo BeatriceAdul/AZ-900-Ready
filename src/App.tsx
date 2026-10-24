@@ -15,17 +15,18 @@ const topicName = (id: string) => topics.find(t => t.id === id)?.name || 'All To
 const pct = (n: number, d: number) => d ? Math.round(n / d * 100) : 0
 
 function Shell({children}: {children: React.ReactNode}) {
-  const [darkMode, setDarkMode] = useState(() => {
-  return localStorage.getItem('az900-dark-mode') === 'true'
-})
-
-useEffect(() => {
-  document.documentElement.classList.toggle('dark', darkMode)
-  localStorage.setItem('az900-dark-mode', String(darkMode))
-}, [darkMode])
   const [open, setOpen] = useState(false)
   const [authUser, setAuthUser] = useState<any>(null)
 
+  const [darkMode, setDarkMode] = useState(() => {
+    return localStorage.getItem('az900-dark-mode') === 'true'
+  })
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', darkMode)
+    localStorage.setItem('az900-dark-mode', String(darkMode))
+  }, [darkMode])
+  
   const nav = [
     ['/', 'Dashboard', LayoutDashboard],
     ['/practice', 'Practice Quiz', Play],
@@ -1801,10 +1802,6 @@ useEffect(() => {
       setLoading(false)
       return
     }
-useEffect(() => {
-  document.documentElement.classList.toggle('dark', darkMode)
-  localStorage.setItem('az900-dark-mode', String(darkMode))
-}, [darkMode])
 
     supabase.auth.getSession().then(({ data }) => {
       setUser(data.session?.user ?? null)

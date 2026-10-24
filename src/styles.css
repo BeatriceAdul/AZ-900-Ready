@@ -247,3 +247,1265 @@ html.dark .theme-option {
   color: #e2e8f0;
   border-color: #475569;
 }
+/* =========================================================
+   AZ-900 READY — COMPLETE DARK MODE
+   ========================================================= */
+
+html.dark,
+html.dark body {
+  background: #0f172a;
+  color: #e2e8f0;
+}
+
+html.dark body {
+  color-scheme: dark;
+}
+
+html.dark #root {
+  background: #0f172a;
+}
+
+/* Main application */
+html.dark .app-shell {
+  background: #0f172a;
+  color: #e2e8f0;
+}
+
+html.dark .main {
+  background: #0f172a;
+  color: #e2e8f0;
+}
+
+/* Sidebar */
+html.dark .sidebar {
+  background: #111827;
+  color: #e5e7eb;
+  border-color: #1f2937;
+}
+
+html.dark .sidebar a {
+  color: #cbd5e1;
+}
+
+html.dark .sidebar a:hover {
+  background: #1e293b;
+  color: #ffffff;
+}
+
+html.dark .sidebar a.active {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+/* Top bar */
+html.dark .topbar {
+  background: #111827;
+  color: #e2e8f0;
+  border-color: #1f2937;
+}
+
+html.dark .top-search {
+  background: #1e293b;
+  color: #94a3b8;
+  border-color: #334155;
+}
+
+/* General panels/cards */
+html.dark .panel,
+html.dark .card,
+html.dark .stat-card,
+html.dark .topic-card,
+html.dark .feature-card,
+html.dark .info-card,
+html.dark .result-card,
+html.dark .question-card,
+html.dark .quiz-card,
+html.dark .settings-card {
+  background: #1e293b;
+  color: #e2e8f0;
+  border-color: #334155;
+  box-shadow: none;
+}
+
+/* Headings */
+html.dark h1,
+html.dark h2,
+html.dark h3,
+html.dark h4,
+html.dark h5,
+html.dark h6 {
+  color: #f8fafc;
+}
+
+/* Normal text */
+html.dark p,
+html.dark span,
+html.dark small,
+html.dark label {
+  color: #cbd5e1;
+}
+
+/* Strong/bold text */
+html.dark strong,
+html.dark b {
+  color: #f1f5f9;
+}
+
+/* Inputs */
+html.dark input,
+html.dark select,
+html.dark textarea {
+  background: #0f172a;
+  color: #f8fafc;
+  border-color: #475569;
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: #64748b;
+}
+
+html.dark input:focus,
+html.dark select:focus,
+html.dark textarea:focus {
+  border-color: #60a5fa;
+  outline-color: #60a5fa;
+}
+
+/* Buttons */
+html.dark button {
+  color: #e2e8f0;
+}
+
+html.dark .btn.secondary,
+html.dark .btn.outline,
+html.dark .icon-btn {
+  background: #1e293b;
+  color: #e2e8f0;
+  border-color: #475569;
+}
+
+html.dark .btn.secondary:hover,
+html.dark .btn.outline:hover,
+html.dark .icon-btn:hover {
+  background: #334155;
+}
+
+/* Keep primary buttons visible */
+html.dark .btn.primary {
+  background: #2563eb;
+  color: #ffffff;
+  border-color: #2563eb;
+}
+
+html.dark .btn.primary:hover {
+  background: #1d4ed8;
+}
+
+/* Quiz */
+html.dark .quiz-container,
+html.dark .quiz-content,
+html.dark .quiz-question,
+html.dark .question,
+html.dark .quiz-options {
+  color: #e2e8f0;
+}
+
+html.dark .option,
+html.dark .answer-option,
+html.dark .choice,
+html.dark .quiz-option {
+  background: #1e293b;
+  color: #e2e8f0;
+  border-color: #475569;
+}
+
+html.dark .option:hover,
+html.dark .answer-option:hover,
+html.dark .choice:hover,
+html.dark .quiz-option:hover {
+  background: #334155;
+  border-color: #60a5fa;
+}
+
+/* Feedback */
+html.dark .feedback {
+  background: #172033;
+  color: #e2e8f0;
+  border-color: #334155;
+}
+
+html.dark .feedback p,
+html.dark .feedback span {
+  color: #cbd5e1;
+}
+
+html.dark .feedback.good {
+  background: #10251c;
+  border-color: #166534;
+}
+
+html.dark .feedback.bad {
+  background: #2a1515;
+  border-color: #991b1b;
+}
+
+/* Progress bars */
+html.dark .bar {
+  background: #334155;
+}
+
+/* Activity/history rows */
+html.dark .activity-row,
+html.dark .topic-row,
+html.dark .review-item,
+html.dark .mistake {
+  background: #1e293b;
+  color: #e2e8f0;
+  border-color: #334155;
+}
+
+/* Tables */
+html.dark table {
+  background: #1e293b;
+  color: #e2e8f0;
+}
+
+html.dark th {
+  background: #0f172a;
+  color: #f8fafc;
+}
+
+html.dark td {
+  color: #cbd5e1;
+  border-color: #334155;
+}
+
+/* Links */
+html.dark a {
+  color: #60a5fa;
+}
+
+html.dark a:hover {
+  color: #93c5fd;
+}
+
+/* Settings */
+html.dark .settings-section,
+html.dark .settings-option,
+html.dark .theme-option {
+  background: #1e293b;
+  color: #e2e8f0;
+  border-color: #334155;
+}
+
+html.dark .theme-option:hover {
+  background: #334155;
+}
+
+/* Badges / pills */
+html.dark .badge,
+html.dark .pill,
+html.dark .tag {
+  background: #334155;
+  color: #e2e8f0;
+}
+
+/* Empty states */
+html.dark .empty,
+html.dark .empty-state {
+  color: #cbd5e1;
+}
+
+/* Modals */
+html.dark .modal,
+html.dark .modal-content,
+html.dark .dialog {
+  background: #1e293b;
+  color: #e2e8f0;
+  border-color: #475569;
+}
+
+/* Dividers */
+html.dark hr {
+  border-color: #334155;
+}
+
+/* Code/pre areas */
+html.dark pre,
+html.dark code {
+  background: #0f172a;
+  color: #e2e8f0;
+}
+
+/* Password fields */
+html.dark .password-toggle {
+  color: #94a3b8;
+}
+
+html.dark .password-toggle:hover {
+  color: #60a5fa;
+}
+
+/* Scrollbar */
+html.dark ::-webkit-scrollbar {
+  width: 10px;
+}
+
+html.dark ::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+
+html.dark ::-webkit-scrollbar-thumb {
+  background: #475569;
+  border-radius: 10px;
+}
+
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+/* =========================================================
+   AZ-900 READY — COMPLETE DARK MODE FIX
+   Targets the ACTUAL classes used by the current App.tsx
+   ========================================================= */
+
+html.dark,
+html.dark body,
+html.dark #root {
+  background: #0f172a !important;
+  color: #e2e8f0 !important;
+}
+
+/* ---------- APP STRUCTURE ---------- */
+
+html.dark .app-shell {
+  background: #0f172a !important;
+  color: #e2e8f0 !important;
+}
+
+html.dark .main {
+  background: #0f172a !important;
+  color: #e2e8f0 !important;
+}
+
+html.dark .page {
+  background: #0f172a !important;
+  color: #e2e8f0 !important;
+}
+
+html.dark .page-title {
+  background: transparent !important;
+  color: #e2e8f0 !important;
+}
+
+html.dark .page-title h1 {
+  color: #f8fafc !important;
+}
+
+html.dark .page-title p {
+  color: #94a3b8 !important;
+}
+
+
+/* ---------- SIDEBAR ---------- */
+
+html.dark .sidebar {
+  background: #111827 !important;
+  color: #e5e7eb !important;
+  border-color: #1f2937 !important;
+}
+
+html.dark .sidebar nav a {
+  color: #cbd5e1 !important;
+}
+
+html.dark .sidebar nav a:hover {
+  background: #1e293b !important;
+  color: #ffffff !important;
+}
+
+html.dark .sidebar nav a.active {
+  background: #2563eb !important;
+  color: #ffffff !important;
+}
+
+html.dark .sidebar-note {
+  background: #172033 !important;
+  color: #94a3b8 !important;
+  border-color: #334155 !important;
+}
+
+html.dark .side-user {
+  background: #111827 !important;
+  color: #e2e8f0 !important;
+  border-color: #1f2937 !important;
+}
+
+html.dark .side-user b {
+  color: #f8fafc !important;
+}
+
+html.dark .side-user small {
+  color: #94a3b8 !important;
+}
+
+
+/* ---------- TOP BAR ---------- */
+
+html.dark .topbar {
+  background: #111827 !important;
+  color: #e2e8f0 !important;
+  border-color: #1f2937 !important;
+}
+
+html.dark .top-search {
+  background: #1e293b !important;
+  color: #94a3b8 !important;
+  border-color: #334155 !important;
+}
+
+html.dark .icon-btn {
+  background: #1e293b !important;
+  color: #e2e8f0 !important;
+  border-color: #475569 !important;
+}
+
+html.dark .icon-btn:hover {
+  background: #334155 !important;
+}
+
+
+/* =========================================================
+   DASHBOARD
+   ========================================================= */
+
+/* Upper welcome section */
+html.dark .welcome {
+  background: #1e293b !important;
+  color: #e2e8f0 !important;
+  border-color: #334155 !important;
+}
+
+html.dark .welcome h1 {
+  color: #f8fafc !important;
+}
+
+html.dark .welcome p {
+  color: #cbd5e1 !important;
+}
+
+
+/* Statistics cards */
+html.dark .stats-grid {
+  background: transparent !important;
+}
+
+html.dark .stat-card {
+  background: #1e293b !important;
+  color: #e2e8f0 !important;
+  border-color: #334155 !important;
+  box-shadow: none !important;
+}
+
+html.dark .stat-card small {
+  color: #94a3b8 !important;
+}
+
+html.dark .stat-card strong {
+  color: #f8fafc !important;
+}
+
+html.dark .stat-card span {
+  color: #94a3b8 !important;
+}
+
+html.dark .stat-icon {
+  background: #172554 !important;
+  color: #60a5fa !important;
+}
+
+
+/* Dashboard columns */
+html.dark .dashboard-grid {
+  background: transparent !important;
+}
+
+
+/* All panels */
+html.dark .panel {
+  background: #1e293b !important;
+  color: #e2e8f0 !important;
+  border-color: #334155 !important;
+  box-shadow: none !important;
+}
+
+html.dark .panel h1,
+html.dark .panel h2,
+html.dark .panel h3,
+html.dark .panel h4 {
+  color: #f8fafc !important;
+}
+
+html.dark .panel p {
+  color: #cbd5e1 !important;
+}
+
+html.dark .panel-head {
+  color: #e2e8f0 !important;
+}
+
+html.dark .panel-head h2 {
+  color: #f8fafc !important;
+}
+
+html.dark .panel-head p {
+  color: #94a3b8 !important;
+}
+
+html.dark .panel-head a {
+  color: #60a5fa !important;
+}
+
+
+/* Topic rows */
+html.dark .topic-row {
+  background: transparent !important;
+  color: #e2e8f0 !important;
+  border-color: #334155 !important;
+}
+
+html.dark .topic-title {
+  color: #e2e8f0 !important;
+}
+
+html.dark .topic-title span {
+  color: #cbd5e1 !important;
+}
+
+html.dark .topic-title b {
+  color: #f8fafc !important;
+}
+
+
+/* Progress bars */
+html.dark .bar {
+  background: #334155 !important;
+}
+
+html.dark .bar i {
+  background: #3b82f6 !important;
+}
+
+
+/* Smart Recovery card on Dashboard */
+html.dark .recovery {
+  background: #1e293b !important;
+  color: #e2e8f0 !important;
+}
+
+html.dark .recovery h2 {
+  color: #f8fafc !important;
+}
+
+html.dark .recovery p {
+  color: #cbd5e1 !important;
+}
+
+
+/* Recent activity */
+html.dark .activity {
+  color: #e2e8f0 !important;
+}
+
+html.dark .activity-row {
+  background: #172033 !important;
+  color: #e2e8f0 !important;
+  border-color: #334155 !important;
+}
+
+html.dark .activity-row b {
+  color: #f8fafc !important;
+}
+
+html.dark .activity-row small {
+  color: #94a3b8 !important;
+}
+
+html.dark .activity-row strong {
+  color: #60a5fa !important;
+}
+
+
+/* =========================================================
+   AI STUDY BUDDY
+   ========================================================= */
+
+html.dark .buddy {
+  background: #1e293b !important;
+  color: #e2e8f0 !important;
+  border-color: #334155 !important;
+  box-shadow: none !important;
+}
+
+
+/* Buddy heading */
+html.dark .buddy-head {
+  background: #172033 !important;
+  color: #e2e8f0 !important;
+  border-color: #334155 !important;
+}
+
+html.dark .buddy-head h2 {
+  color: #f8fafc !important;
+}
+
+html.dark .buddy-head p {
+  color: #94a3b8 !important;
+}
+
+
+/* Suggestion buttons */
+html.dark .suggestions {
+  background: transparent !important;
+}
+
+html.dark .suggestions button {
+  background: #172033 !important;
+  color: #cbd5e1 !important;
+  border-color: #475569 !important;
+}
+
+html.dark .suggestions button:hover {
+  background: #334155 !important;
+  color: #ffffff !important;
+  border-color: #60a5fa !important;
+}
+
+
+/* Chat area */
+html.dark .chat {
+  background: #0f172a !important;
+  border-color: #334155 !important;
+}
+
+
+/* AI messages */
+html.dark .bubble.ai {
+  background: #1e293b !important;
+  color: #e2e8f0 !important;
+  border-color: #475569 !important;
+}
+
+
+/* User messages */
+html.dark .bubble.user {
+  background: #1d4ed8 !important;
+  color: #ffffff !important;
+  border-color: #2563eb !important;
+}
+
+
+/* Buttons underneath quiz */
+html.dark .buddy-next {
+  background: transparent !important;
+  color: #e2e8f0 !important;
+}
+
+
+/* Chat input */
+html.dark .chat-input {
+  background: #172033 !important;
+  border-color: #334155 !important;
+}
+
+html.dark .chat-input input {
+  background: #0f172a !important;
+  color: #f8fafc !important;
+  border-color: #475569 !important;
+}
+
+html.dark .chat-input input::placeholder {
+  color: #64748b !important;
+}
+
+
+/* =========================================================
+   PRACTICE QUIZ
+   ========================================================= */
+
+html.dark .quiz-card,
+html.dark .quiz-container,
+html.dark .quiz-content,
+html.dark .question-card {
+  background: #1e293b !important;
+  color: #e2e8f0 !important;
+  border-color: #334155 !important;
+}
+
+html.dark .quiz-card h1,
+html.dark .quiz-card h2,
+html.dark .quiz-card h3,
+html.dark .question-card h1,
+html.dark .question-card h2,
+html.dark .question-card h3 {
+  color: #f8fafc !important;
+}
+
+html.dark .quiz-card p,
+html.dark .question-card p {
+  color: #cbd5e1 !important;
+}
+
+
+/* Answer choices */
+html.dark .option,
+html.dark .answer-option,
+html.dark .choice,
+html.dark .quiz-option {
+  background: #172033 !important;
+  color: #e2e8f0 !important;
+  border-color: #475569 !important;
+}
+
+html.dark .option:hover,
+html.dark .answer-option:hover,
+html.dark .choice:hover,
+html.dark .quiz-option:hover {
+  background: #334155 !important;
+  border-color: #60a5fa !important;
+  color: #ffffff !important;
+}
+
+
+/* =========================================================
+   FEEDBACK / RESULTS
+   ========================================================= */
+
+html.dark .feedback {
+  background: #172033 !important;
+  color: #e2e8f0 !important;
+  border-color: #334155 !important;
+}
+
+html.dark .feedback h3,
+html.dark .feedback h4,
+html.dark .feedback b {
+  color: #f8fafc !important;
+}
+
+html.dark .feedback p,
+html.dark .feedback small {
+  color: #cbd5e1 !important;
+}
+
+html.dark .feedback.good {
+  background: #10251c !important;
+  border-color: #166534 !important;
+}
+
+html.dark .feedback.bad {
+  background: #2a1515 !important;
+  border-color: #991b1b !important;
+}
+
+
+/* =========================================================
+   TOPICS / PROGRESS / RECOVERY
+   ========================================================= */
+
+html.dark .topic-card,
+html.dark .recovery-card,
+html.dark .recovery-focus,
+html.dark .recovery-hero {
+  background: #1e293b !important;
+  color: #e2e8f0 !important;
+  border-color: #334155 !important;
+}
+
+html.dark .topic-card h2,
+html.dark .topic-card h3,
+html.dark .recovery-card h2,
+html.dark .recovery-card h3,
+html.dark .recovery-focus h2,
+html.dark .recovery-hero h2 {
+  color: #f8fafc !important;
+}
+
+html.dark .topic-card p,
+html.dark .recovery-card p,
+html.dark .recovery-focus p,
+html.dark .recovery-hero p {
+  color: #cbd5e1 !important;
+}
+
+html.dark .topic-points span {
+  background: #334155 !important;
+  color: #cbd5e1 !important;
+}
+
+
+/* =========================================================
+   REVIEW MISTAKES
+   ========================================================= */
+
+html.dark .mistake {
+  background: #1e293b !important;
+  color: #e2e8f0 !important;
+  border-color: #334155 !important;
+}
+
+html.dark .mistake h2 {
+  color: #f8fafc !important;
+}
+
+html.dark .mistake p {
+  color: #cbd5e1 !important;
+}
+
+html.dark .wrong-answer {
+  color: #fca5a5 !important;
+}
+
+html.dark .right-answer {
+  color: #86efac !important;
+}
+
+
+/* =========================================================
+   PROFILE
+   ========================================================= */
+
+html.dark .profile-card {
+  background: #1e293b !important;
+  color: #e2e8f0 !important;
+  border-color: #334155 !important;
+}
+
+html.dark .profile-card h2 {
+  color: #f8fafc !important;
+}
+
+html.dark .profile-card p {
+  color: #94a3b8 !important;
+}
+
+html.dark .big-avatar {
+  background: #2563eb !important;
+  color: #ffffff !important;
+}
+
+
+/* =========================================================
+   SETTINGS
+   ========================================================= */
+
+html.dark .settings-list {
+  background: #1e293b !important;
+  color: #e2e8f0 !important;
+}
+
+html.dark .settings-list > div {
+  border-color: #334155 !important;
+}
+
+html.dark .settings-list h3 {
+  color: #f8fafc !important;
+}
+
+html.dark .settings-list p {
+  color: #94a3b8 !important;
+}
+
+
+/* =========================================================
+   FORMS
+   ========================================================= */
+
+html.dark input,
+html.dark select,
+html.dark textarea {
+  background: #0f172a !important;
+  color: #f8fafc !important;
+  border-color: #475569 !important;
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: #64748b !important;
+}
+
+html.dark label {
+  color: #cbd5e1 !important;
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+html.dark .btn.ghost,
+html.dark .btn.secondary,
+html.dark .btn.outline {
+  background: #1e293b !important;
+  color: #e2e8f0 !important;
+  border-color: #475569 !important;
+}
+
+html.dark .btn.ghost:hover,
+html.dark .btn.secondary:hover,
+html.dark .btn.outline:hover {
+  background: #334155 !important;
+  color: #ffffff !important;
+}
+
+html.dark .btn.primary {
+  background: #2563eb !important;
+  color: #ffffff !important;
+  border-color: #2563eb !important;
+}
+
+
+/* =========================================================
+   GENERAL TEXT
+   ========================================================= */
+
+html.dark h1,
+html.dark h2,
+html.dark h3,
+html.dark h4,
+html.dark h5,
+html.dark h6 {
+  color: #f8fafc !important;
+}
+
+html.dark p {
+  color: #cbd5e1 !important;
+}
+
+html.dark small {
+  color: #94a3b8 !important;
+}
+
+html.dark strong,
+html.dark b {
+  color: #f8fafc !important;
+}
+
+html.dark .eyebrow {
+  color: #60a5fa !important;
+}
+
+
+/* =========================================================
+   MODALS / EMPTY STATES
+   ========================================================= */
+
+html.dark .empty {
+  color: #cbd5e1 !important;
+}
+
+html.dark .empty p {
+  color: #cbd5e1 !important;
+}
+
+html.dark .modal,
+html.dark .modal-content,
+html.dark .dialog {
+  background: #1e293b !important;
+  color: #e2e8f0 !important;
+  border-color: #475569 !important;
+}
+
+
+/* =========================================================
+   LINKS
+   ========================================================= */
+
+html.dark a {
+  color: #60a5fa;
+}
+
+html.dark a:hover {
+  color: #93c5fd;
+}
+
+
+/* =========================================================
+   DIVIDERS
+   ========================================================= */
+
+html.dark hr {
+  border-color: #334155 !important;
+}
+
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+html.dark ::-webkit-scrollbar {
+  width: 10px;
+}
+
+html.dark ::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+
+html.dark ::-webkit-scrollbar-thumb {
+  background: #475569;
+  border-radius: 10px;
+}
+
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+/* =========================================================
+   FINAL DARK MODE PATCH
+   REVIEW MISTAKES + SMART RECOVERY
+   ========================================================= */
+
+/* ---------- REVIEW MISTAKES ---------- */
+
+html.dark .review-list {
+  background: transparent !important;
+  color: #e2e8f0 !important;
+}
+
+html.dark .mistake {
+  background: #1e293b !important;
+  color: #e2e8f0 !important;
+  border: 1px solid #334155 !important;
+  box-shadow: none !important;
+}
+
+html.dark .mistake h2 {
+  color: #f8fafc !important;
+}
+
+html.dark .mistake p {
+  color: #cbd5e1 !important;
+}
+
+html.dark .question-meta {
+  color: #94a3b8 !important;
+}
+
+html.dark .question-meta span {
+  background: #334155 !important;
+  color: #cbd5e1 !important;
+  border-color: #475569 !important;
+}
+
+/* Your answer */
+html.dark .wrong-answer {
+  background: #2a1515 !important;
+  color: #fca5a5 !important;
+  border-color: #7f1d1d !important;
+}
+
+html.dark .wrong-answer strong {
+  color: #fecaca !important;
+}
+
+/* Correct answer */
+html.dark .right-answer {
+  background: #10251c !important;
+  color: #86efac !important;
+  border-color: #166534 !important;
+}
+
+html.dark .right-answer strong {
+  color: #bbf7d0 !important;
+}
+
+
+/* Explanation box */
+html.dark .mistake .feedback {
+  background: #172033 !important;
+  color: #e2e8f0 !important;
+  border-color: #334155 !important;
+}
+
+html.dark .mistake .feedback.good {
+  background: #172033 !important;
+  color: #e2e8f0 !important;
+  border-color: #334155 !important;
+}
+
+html.dark .mistake .feedback b {
+  color: #f8fafc !important;
+}
+
+html.dark .mistake .feedback p {
+  color: #cbd5e1 !important;
+}
+
+
+/* Simple explanation + memory tip */
+html.dark .review-learning-point {
+  background: #1e293b !important;
+  color: #e2e8f0 !important;
+  border-color: #334155 !important;
+}
+
+html.dark .review-learning-point strong {
+  color: #f8fafc !important;
+}
+
+html.dark .review-learning-point p {
+  color: #cbd5e1 !important;
+}
+
+
+/* Review action area */
+html.dark .review-actions {
+  background: transparent !important;
+  color: #e2e8f0 !important;
+}
+
+html.dark .review-actions .btn.primary {
+  background: #2563eb !important;
+  color: #ffffff !important;
+}
+
+
+/* ---------- SMART RECOVERY ---------- */
+
+html.dark .recovery-hero {
+  background: #1e293b !important;
+  color: #e2e8f0 !important;
+  border: 1px solid #334155 !important;
+  box-shadow: none !important;
+}
+
+html.dark .recovery-hero h2 {
+  color: #f8fafc !important;
+}
+
+html.dark .recovery-hero p {
+  color: #cbd5e1 !important;
+}
+
+html.dark .recovery-hero .eyebrow {
+  color: #60a5fa !important;
+}
+
+
+/* Main priority area */
+html.dark .recovery-focus {
+  background: #1e293b !important;
+  color: #e2e8f0 !important;
+  border: 1px solid #334155 !important;
+  box-shadow: none !important;
+}
+
+html.dark .recovery-focus h2 {
+  color: #f8fafc !important;
+}
+
+html.dark .recovery-focus p {
+  color: #cbd5e1 !important;
+}
+
+
+/* Recovery grid */
+html.dark .recovery-grid {
+  background: transparent !important;
+  color: #e2e8f0 !important;
+}
+
+
+/* Individual recovery cards */
+html.dark .recovery-card {
+  background: #1e293b !important;
+  color: #e2e8f0 !important;
+  border: 1px solid #334155 !important;
+  box-shadow: none !important;
+}
+
+html.dark .recovery-card h3 {
+  color: #f8fafc !important;
+}
+
+html.dark .recovery-card p {
+  color: #cbd5e1 !important;
+}
+
+html.dark .recovery-card .question-meta {
+  background: transparent !important;
+}
+
+html.dark .recovery-card .question-meta span {
+  background: #334155 !important;
+  color: #cbd5e1 !important;
+}
+
+
+/* Recovery progress */
+html.dark .recovery-card .progress {
+  background: #334155 !important;
+}
+
+html.dark .recovery-card .progress i {
+  background: #3b82f6 !important;
+}
+
+
+/* Feature icon */
+html.dark .feature-icon {
+  background: #172554 !important;
+  color: #60a5fa !important;
+}
+
+
+/* ---------- EMPTY RECOVERY/REVIEW STATE ---------- */
+
+html.dark .empty {
+  background: transparent !important;
+  color: #cbd5e1 !important;
+}
+
+html.dark .empty svg {
+  color: #60a5fa !important;
+}
+
+html.dark .empty p {
+  color: #cbd5e1 !important;
+}
+
+
+/* ---------- GENERAL WHITE CONTAINERS INSIDE THESE PAGES ---------- */
+
+html.dark .review-list > *,
+html.dark .recovery-grid > * {
+  background-color: #1e293b !important;
+}
+
+html.dark .review-list > .panel,
+html.dark .recovery-grid > .panel {
+  background-color: #1e293b !important;
+}
+
+
+/* ---------- MAKE SURE TEXT NEVER STAYS WHITE-ON-WHITE ---------- */
+
+html.dark .mistake span,
+html.dark .mistake div,
+html.dark .recovery-card span,
+html.dark .recovery-card div,
+html.dark .recovery-focus span,
+html.dark .recovery-focus div {
+  color: inherit;
+}
+
+html.dark .mistake h1,
+html.dark .mistake h2,
+html.dark .mistake h3,
+html.dark .recovery-card h1,
+html.dark .recovery-card h2,
+html.dark .recovery-card h3,
+html.dark .recovery-focus h1,
+html.dark .recovery-focus h2,
+html.dark .recovery-focus h3 {
+  color: #f8fafc !important;
+}
