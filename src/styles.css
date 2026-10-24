@@ -148,3 +148,102 @@
     width: 100%;
   }
 }
+.password-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-field input {
+  width: 100%;
+  padding-right: 48px;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 6px;
+  color: #64748b;
+}
+
+.password-toggle:hover {
+  color: #2563eb;
+}
+
+.password-mismatch {
+  display: block;
+  margin-top: 6px;
+  font-size: 13px;
+  color: #dc2626;
+}
+
+.password-match {
+  display: block;
+  margin-top: 6px;
+  font-size: 13px;
+  color: #16a34a;
+}
+html.dark,
+html.dark body {
+  background: #0f172a;
+  color: #e2e8f0;
+}
+
+html.dark body {
+  min-height: 100vh;
+}
+
+html.dark .app-shell {
+  background: #0f172a;
+  color: #e2e8f0;
+}
+
+html.dark .sidebar,
+html.dark .topbar,
+html.dark .card,
+html.dark .panel,
+html.dark .settings-card {
+  background: #1e293b;
+  color: #e2e8f0;
+  border-color: #334155;
+}
+
+html.dark h1,
+html.dark h2,
+html.dark h3,
+html.dark h4,
+html.dark p,
+html.dark span,
+html.dark label {
+  color: #e2e8f0;
+}
+
+html.dark input,
+html.dark select,
+html.dark textarea {
+  background: #0f172a;
+  color: #e2e8f0;
+  border-color: #475569;
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: #94a3b8;
+}
+
+html.dark .muted,
+html.dark .subtitle {
+  color: #94a3b8;
+}
+
+html.dark .theme-option {
+  background: #334155;
+  color: #e2e8f0;
+  border-color: #475569;
+}

@@ -2,8 +2,8 @@ import { useEffect, useMemo, useState } from 'react'
 import { Link, Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import {
   ArrowRight, BarChart3, BookOpen, Brain, CheckCircle2, ChevronLeft, ChevronRight,
-  CircleHelp, Clock3, Home, LayoutDashboard, LogIn, Menu, Moon, Play, RotateCcw,
-  Search, Settings, ShieldCheck, Sparkles, Target, TrendingUp, User, X, Zap
+  CircleHelp, Clock3, Eye, EyeOff, Home, LayoutDashboard, LogIn, Menu, Moon, Play,
+  RotateCcw, Search, Settings, ShieldCheck, Sparkles, Target, TrendingUp, User, X, Zap
 } from 'lucide-react'
 import { questions } from './data/questions'
 import { topics } from './data/topics'
@@ -15,6 +15,14 @@ const topicName = (id: string) => topics.find(t => t.id === id)?.name || 'All To
 const pct = (n: number, d: number) => d ? Math.round(n / d * 100) : 0
 
 function Shell({children}: {children: React.ReactNode}) {
+  const [darkMode, setDarkMode] = useState(() => {
+  return localStorage.getItem('az900-dark-mode') === 'true'
+})
+
+useEffect(() => {
+  document.documentElement.classList.toggle('dark', darkMode)
+  localStorage.setItem('az900-dark-mode', String(darkMode))
+}, [darkMode])
   const [open, setOpen] = useState(false)
   const [authUser, setAuthUser] = useState<any>(null)
 
@@ -123,9 +131,14 @@ function Shell({children}: {children: React.ReactNode}) {
           </div>
 
           <div className="top-actions">
-            <button className="icon-btn">
-              <Moon size={18} />
-            </button>
+           <button
+  type="button"
+  className="theme-option"
+  onClick={() => setDarkMode((current) => !current)}
+>
+  <Moon size={18} />
+  <span>{darkMode ? 'Light mode' : 'Dark mode'}</span>
+</button>
 
             <Link className="avatar" to="/profile">
               {displayName[0].toUpperCase()}
@@ -152,6 +165,9 @@ function Auth({ mode }: { mode: 'login' | 'signup' }) {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [pass, setPass] = useState('')
+  const [confirmPass, setConfirmPass] = useState('')
+  const [showPass, setShowPass] = useState(false)
+  const [showConfirmPass, setShowConfirmPass] = useState(false)
   const [error, setError] = useState('')
   const [message, setMessage] = useState('')
   const nav = useNavigate()
@@ -174,6 +190,11 @@ function Auth({ mode }: { mode: 'login' | 'signup' }) {
     if (mode === 'signup') {
       if (!name.trim()) {
         setError('Please enter your name.')
+        return
+      }
+
+      if (pass !== confirmPass) {
+        setError('Passwords do not match.')
         return
       }
 
@@ -260,17 +281,70 @@ function Auth({ mode }: { mode: 'login' | 'signup' }) {
             />
           </label>
 
-          <label>
-            Password
-            <input
-              required
-              minLength={6}
-              type="password"
-              value={pass}
-              onChange={(e) => setPass(e.target.value)}
-              placeholder="••••••••"
-            />
-          </label>
+           <label>
+  Password
+  <div className="password-field">
+    <input
+      required
+      minLength={6}
+      type={showPass ? 'text' : 'password'}
+      value={pass}
+      onChange={(e) => setPass(e.target.value)}
+      placeholder="••••••••"
+    />
+
+    <button
+      type="button"
+      className="password-toggle"
+      onClick={() => setShowPass(!showPass)}
+      aria-label={showPass ? 'Hide password' : 'Show password'}
+    >
+      {showPass ? <EyeOff size={18} /> : <Eye size={18} />}
+    </button>
+  </div>
+</label>
+
+
+          {mode === 'signup' && (
+            <label>
+              Confirm password
+              <div className="password-field">
+                <input
+                  required
+                  minLength={6}
+                  type={showConfirmPass ? 'text' : 'password'}
+                  value={confirmPass}
+                  onChange={(e) => setConfirmPass(e.target.value)}
+                  placeholder="••••••••"
+                />
+
+                <button
+                  type="button"
+                  className="password-toggle"
+                  onClick={() => setShowConfirmPass((prev) => !prev)}
+                  aria-label={
+                    showConfirmPass
+                      ? 'Hide confirm password'
+                      : 'Show confirm password'
+                  }
+                >
+                  {showConfirmPass ? '◉' : '◌'}
+                </button>
+              </div>
+
+              {confirmPass && pass !== confirmPass && (
+                <span className="password-mismatch">
+                  Passwords do not match.
+                </span>
+              )}
+
+              {confirmPass && pass === confirmPass && (
+                <span className="password-match">
+                  ✓ Passwords match
+                </span>
+              )}
+            </label>
+          )}
 
           {error && (
             <p className="auth-error">
@@ -284,7 +358,15 @@ function Auth({ mode }: { mode: 'login' | 'signup' }) {
             </p>
           )}
 
-          <button className="btn primary full" type="submit">
+          <button
+            className="btn primary full"
+            type="submit"
+            disabled={
+              mode === 'signup' &&
+              !!confirmPass &&
+              pass !== confirmPass
+            }
+          >
             {mode === 'login' ? 'Log in' : 'Create account'}
             <ArrowRight size={17} />
           </button>
@@ -305,7 +387,6 @@ function Auth({ mode }: { mode: 'login' | 'signup' }) {
     </div>
   )
 }
-
 function Dashboard() {
   const [attempts, setAttempts] = useState<Attempt[]>([])
 
@@ -1648,6 +1729,14 @@ function Profile() {
 }
 
 function SettingsPage(){
+  const [darkMode, setDarkMode] = useState(() => {
+  return localStorage.getItem('az900-dark-mode') === 'true'
+})
+useEffect(() => {
+  document.documentElement.classList.toggle('dark', darkMode)
+  localStorage.setItem('az900-dark-mode', String(darkMode))
+}, [darkMode])
+
   const nav = useNavigate()
 
   async function logout() {
@@ -1701,6 +1790,9 @@ function SettingsPage(){
 }
 
  export default function App() {
+  const [darkMode, setDarkMode] = useState(() => {
+  return localStorage.getItem('az900-dark-mode') === 'true'
+})
   const [user, setUser] = useState<any>(null)
   const [loading, setLoading] = useState(true)
 
@@ -1709,6 +1801,10 @@ function SettingsPage(){
       setLoading(false)
       return
     }
+useEffect(() => {
+  document.documentElement.classList.toggle('dark', darkMode)
+  localStorage.setItem('az900-dark-mode', String(darkMode))
+}, [darkMode])
 
     supabase.auth.getSession().then(({ data }) => {
       setUser(data.session?.user ?? null)
