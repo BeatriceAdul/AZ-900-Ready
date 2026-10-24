@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Link, Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
+import { Link, Navigate, Route, Routes, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import {
   ArrowRight, BarChart3, BookOpen, Brain, CheckCircle2, ChevronLeft, ChevronRight,
   CircleHelp, Clock3, Eye, EyeOff, Home, LayoutDashboard, LogIn, Menu, Moon, Play,
@@ -127,9 +127,22 @@ function Shell({children}: {children: React.ReactNode}) {
           </button>
 
           <div className="top-search">
-            <Search size={17} />
-            <span>Search learning topics...</span>
-          </div>
+  <Search size={17} />
+
+  <input
+    type="text"
+    placeholder="Search learning topics..."
+    onKeyDown={(e) => {
+      if (e.key === "Enter") {
+        const query = e.currentTarget.value.trim()
+
+        if (query) {
+          window.location.href = `/topics?search=${encodeURIComponent(query)}`
+        }
+      }
+    }}
+  />
+</div>
 
           <div className="top-actions">
            <button
@@ -917,7 +930,74 @@ function Results() {
   )
 }
 
-function Topics(){return <Page title="Topics" subtitle="Build your foundations one learning area at a time."><div className="topic-grid">{topics.map(t=><div className="topic-card" key={t.id}><div className="feature-icon"><BookOpen/></div><h2>{t.name}</h2><p>{t.description}</p><div className="topic-points"><span>Original questions</span><span>Simple explanations</span><span>Memory tips</span></div><Link className="btn primary" to={`/practice?topic=${t.id}`}>Practice topic <ArrowRight/></Link></div>)}</div></Page>}
+function Topics() {
+  const [searchParams] = useSearchParams()
+  const search = searchParams.get("search")?.toLowerCase().trim() || ""
+
+  const filteredTopics = topics.filter((t) => {
+    if (!search) return true
+
+    return (
+      t.name.toLowerCase().includes(search) ||
+      t.description.toLowerCase().includes(search) ||
+      t.id.toLowerCase().includes(search)
+    )
+  })
+
+  return (
+    <Page
+      title="Topics"
+      subtitle="Build your foundations one learning area at a time."
+    >
+      {filteredTopics.length === 0 ? (
+        <Empty
+  icon={Search}
+  text={`No learning topic found for "${search}".`}
+  action="/topics"
+  actionText="View all topics"
+/>
+      ) : (
+        <div className="topic-grid">
+          {filteredTopics.map((t) => (
+            <div
+              className={`topic-card ${
+                search && (
+                  t.name.toLowerCase().includes(search) ||
+                  t.description.toLowerCase().includes(search) ||
+                  t.id.toLowerCase().includes(search)
+                )
+                  ? "search-highlight"
+                  : ""
+              }`}
+              key={t.id}
+            >
+              <div className="feature-icon">
+                <BookOpen />
+              </div>
+
+              <h2>{t.name}</h2>
+
+              <p>{t.description}</p>
+
+              <div className="topic-points">
+                <span>Original questions</span>
+                <span>Simple explanations</span>
+                <span>Memory tips</span>
+              </div>
+
+              <Link
+                className="btn primary"
+                to={`/practice?topic=${t.id}`}
+              >
+                Practice topic <ArrowRight />
+              </Link>
+            </div>
+          ))}
+        </div>
+      )}
+    </Page>
+  )
+}
 
 function Progress() {
   const [attempts, setAttempts] = useState<Attempt[]>([])
